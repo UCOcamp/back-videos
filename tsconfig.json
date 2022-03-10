@@ -13,7 +13,5 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": [
-    "**/*.test.ts"
-  ]
+  "exclude": ["**/*.test.ts"]
 }

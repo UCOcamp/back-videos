@@ -5,10 +5,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
+
   // CORS
   app.enableCors();
-  
+
   // Swagger
   const swaggerConfig = new DocumentBuilder()
     .setTitle('UCOCamp Videos Microservice')
@@ -19,7 +19,7 @@ async function bootstrap() {
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, swaggerDocument);
-  
+
   // App listen
   await app.listen(config.PORT);
 }
