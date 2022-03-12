@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   HttpStatus,
+  NotAcceptableException,
   Post,
   Response,
   UploadedFiles,
@@ -10,16 +11,46 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import {
+  ApiTags,
+  ApiConsumes,
+  ApiBody,
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiNotAcceptableResponse,
+} from '@nestjs/swagger';
 import { Response as res } from 'express';
+import UploadVideoDTO from '../../../shared/swaggerDTOS/UploadVideoDTO';
 import UploadVideoCommand from '../../application/useCases/UploadVideo/commands/UploadVideo.command';
 //import { existsSync, rmSync } from 'fs';
 import UploadVideoRequest from '../../application/useCases/UploadVideo/requests/UploadVideo.request';
 import saveVideoToStorage from './helpers/saveVideoToStorage';
 
+@ApiTags('videos')
 @Controller('videos')
 class UploadVideoController {
   constructor(private readonly commandBus: CommandBus) {}
   @Post('/')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Video File (mp4 | avi)',
+    type: UploadVideoDTO,
+  })
+  @ApiBody({
+    type: UploadVideoDTO,
+  })
+  @ApiCreatedResponse({
+    status: 201,
+    description: 'Video uploaded succesfuly.',
+  })
+  @ApiNotAcceptableResponse({
+    status: 400,
+    description: 'Params missing (Title and Course needed)',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Duplicated or missing Video / Thumbnail!',
+  })
   @UseInterceptors(
     FileFieldsInterceptor(
       [
@@ -42,24 +73,11 @@ class UploadVideoController {
       throw new BadRequestException('Params missing (Title and Course needed)');
     }
     if (!video || !thumbnail) {
-      throw new BadRequestException('Duplicated or missing Video / Thumbnail!');
+      throw new NotAcceptableException(
+        'Duplicated or missing Video / Thumbnail!'
+      );
     }
 
-    /**
-    const video = files.video;
-    const thumbnail = files.thumbnail;
-    if (this.checkIfAlreadyExists(params.course, params.title)) {
-      response.status(HttpStatus.BAD_REQUEST);
-      response.send({ message: 'Video title duplicated in the same course!' });
-      if (video) {
-        rmSync(video[0].path);
-      }
-      if (thumbnail) {
-        rmSync(thumbnail[0].path);
-      }
-      return;
-    }
-    */
     const request = new UploadVideoRequest(
       title,
       video[0].path,
@@ -70,18 +88,8 @@ class UploadVideoController {
     );
     response
       .status(HttpStatus.CREATED)
-      .send({ message: 'video uploaded succesfuly' });
+      .send({ message: 'Video uploaded succesfuly' });
   }
-  /**
-  private checkIfAlreadyExists(course: string, title: string) {
-    const courseDir = './files/' + course.replace(/ /g, '');
-    const folderDir = courseDir + '/' + title.replace(/ /g, '').toLowerCase();
-    if (existsSync(folderDir)) {
-      return true;
-    }
-    return false;
-  }
-  */
 }
 
 export default UploadVideoController;

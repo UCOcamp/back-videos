@@ -13,7 +13,10 @@ const validMimeTypes: string[] = [
 const saveVideoToStorage: MulterOptions = {
   storage: diskStorage({
     destination: (req, file, cb) => {
-      const { course, title } = req.body;
+      let { course, title } = req.body;
+      if (!course) course = '';
+      if (!title) title = '';
+
       const courseDir = './files/' + course.replace(/ /g, '');
       if (!fs.existsSync(courseDir)) {
         fs.mkdirSync(courseDir);
@@ -27,13 +30,17 @@ const saveVideoToStorage: MulterOptions = {
     },
     filename: (req, file, cb) => {
       const fileExtension = path.extname(file.originalname);
-      const { title } = req.body;
+      let { title } = req.body;
+      if (!title) title = '';
       const fileName = title.replace(/ /g, '') + fileExtension;
       cb(null, fileName);
     },
   }),
   fileFilter: (req, file, cb) => {
-    const { course, title } = req.body;
+    let { course, title } = req.body;
+    if (!course) course = '';
+    if (!title) title = '';
+
     const courseDir = './files/' + course;
     const videoDir = courseDir + '/' + title.replace(/ /g, '').toLowerCase();
 
