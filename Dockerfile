@@ -1,4 +1,4 @@
-FROM node:16-alpine as ucocamp-users
+FROM node:16-alpine as ucocamp-videos
 
 WORKDIR /usr/src/app
 

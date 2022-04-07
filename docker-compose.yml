@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   api:
-    container_name: ucocamp-users
+    container_name: ucocamp-videos
     build:
       context: .
-      target: ucocamp-users
+      target: ucocamp-videos
     ports:
       - 4001:4001
     volumes:
