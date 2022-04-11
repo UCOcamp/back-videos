@@ -14,7 +14,7 @@ services:
       - mongo
 
   mongo:
-    container_name: ucocamp-user-database
+    container_name: ucocamp-videos-database
     image: mongo
     ports:
       - 27017:27017
