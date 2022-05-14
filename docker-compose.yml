@@ -10,11 +10,3 @@ services:
       - 4001:4001
     volumes:
       - .:/usr/src/app
-    depends_on:
-      - mongo
-
-  mongo:
-    container_name: ucocamp-user-database
-    image: mongo
-    ports:
-      - 27017:27017

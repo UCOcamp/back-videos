@@ -17,7 +17,13 @@ const saveVideoToStorage: MulterOptions = {
       if (!course) course = '';
       if (!title) title = '';
 
-      const courseDir = './files/' + course.replace(/ /g, '');
+      const baseDir = './files';
+
+      if (!fs.existsSync(baseDir)) {
+        fs.mkdirSync(baseDir);
+      }
+
+      const courseDir = baseDir + '/' + course.replace(/ /g, '');
       if (!fs.existsSync(courseDir)) {
         fs.mkdirSync(courseDir);
       }
