@@ -80,6 +80,7 @@ class UploadVideoController {
 
     const request = new UploadVideoRequest(
       title,
+      course,
       video[0].path,
       thumbnail[0].path
     );

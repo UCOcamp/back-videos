@@ -12,9 +12,9 @@ class UploadVideoHandler implements ICommandHandler<UploadVideoCommand> {
     private readonly NoteRepository: MongoVideoEntityRepository
   ) {}
   async execute(command: UploadVideoCommand): Promise<void> {
-    const { title, url, thumbnailUrl } = command.uploadVideoRequest;
+    const { title, course, url, thumbnailUrl } = command.uploadVideoRequest;
     const video = this.eventPublisher.mergeObjectContext(
-      this.videoFactory.create(title, url, thumbnailUrl)
+      this.videoFactory.create(title, course, url, thumbnailUrl)
     );
 
     await this.NoteRepository.saveOne(video);
