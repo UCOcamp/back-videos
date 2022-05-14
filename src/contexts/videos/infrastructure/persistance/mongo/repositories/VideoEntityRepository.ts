@@ -25,6 +25,9 @@ class MongoVideoEntityRepository
   async getAll(): Promise<Video[]> {
     return await this.findAll();
   }
+  async getAllFromCourse(course: string): Promise<Video[]> {
+    return await this.find({ course: course });
+  }
   async saveOne(video: Video): Promise<void> {
     await this.create(video);
   }

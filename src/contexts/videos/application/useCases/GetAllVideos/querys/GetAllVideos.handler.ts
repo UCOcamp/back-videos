@@ -7,7 +7,7 @@ import { GetAllVideosResponse } from '../responses/getAllVideos.response';
 class GetAllVideosHandler implements IQueryHandler<GetAllVideosQuery> {
   constructor(private readonly videoRepository: MongoVideoEntityRepository) {}
   async execute(): Promise<GetAllVideosResponse> {
-    const allVideos = this.videoRepository.getAll();
+    const allVideos = await this.videoRepository.getAll();
     return allVideos;
   }
 }
