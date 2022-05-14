@@ -4,6 +4,7 @@ import { MongooseModule, SchemaFactory } from '@nestjs/mongoose';
 import {
   VideoCommandHandlers,
   VideoEventHandlers,
+  VideoQueryHandlers,
 } from '../../application/useCases/_index';
 import VideoFactory from '../../domain/entities/VideoFactory';
 import VideoControllers from '../controllers/_index';
@@ -28,6 +29,7 @@ import VideoSchemaFactory from '../persistance/mongo/schemas/Video.schemaFactory
     VideoSchemaFactory,
     ...VideoEventHandlers,
     ...VideoCommandHandlers,
+    ...VideoQueryHandlers,
   ],
 })
 class VideoModule {}

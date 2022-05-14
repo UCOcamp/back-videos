@@ -1,5 +1,6 @@
-import Video from '../../../../domain/entities/video';
+import Video, { VideoAsJSON } from '../../../../domain/entities/video';
 
-type AllVideos = Video[];
+type GetAllVideosResponse = Video[];
+type GetAllVideosResponseJSON = VideoAsJSON[];
 
-export default AllVideos;
+export { GetAllVideosResponse, GetAllVideosResponseJSON };
