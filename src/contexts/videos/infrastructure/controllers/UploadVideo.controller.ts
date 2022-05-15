@@ -18,6 +18,7 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiNotAcceptableResponse,
+  ApiOperation,
 } from '@nestjs/swagger';
 import { Response as res } from 'express';
 import UploadVideoDTO from '../../../shared/swaggerDTOS/UploadVideoDTO';
@@ -31,6 +32,10 @@ import saveVideoToStorage from './helpers/saveVideoToStorage';
 class UploadVideoController {
   constructor(private readonly commandBus: CommandBus) {}
   @Post('/')
+  @ApiOperation({
+    summary:
+      'Upload a video with a title and a thumbnail for a specific course',
+  })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Video File (mp4 | avi)',
