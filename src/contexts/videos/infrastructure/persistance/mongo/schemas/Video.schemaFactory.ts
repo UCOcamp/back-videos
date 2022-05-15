@@ -12,6 +12,7 @@ class VideoSchemaFactory implements EntitySchemaFactory<VideoSchema, Video> {
     return new Video(
       entitySchema.id,
       entitySchema.title,
+      entitySchema.course,
       entitySchema.url,
       entitySchema.thumbnailUrl
     );

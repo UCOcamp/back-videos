@@ -22,8 +22,11 @@ class MongoVideoEntityRepository
   getOne(id: string): Promise<Video> {
     throw new Error('Method not implemented.');
   }
-  getAll(): Promise<Video[]> {
-    throw new Error('Method not implemented.');
+  async getAll(): Promise<Video[]> {
+    return await this.findAll();
+  }
+  async getAllFromCourse(course: string): Promise<Video[]> {
+    return await this.find({ course: course });
   }
   async saveOne(video: Video): Promise<void> {
     await this.create(video);
