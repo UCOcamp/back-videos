@@ -27,8 +27,8 @@ import UploadVideoCommand from '../../application/useCases/UploadVideo/commands/
 import UploadVideoRequest from '../../application/useCases/UploadVideo/requests/UploadVideo.request';
 import saveVideoToStorage from './helpers/saveVideoToStorage';
 
-@ApiTags('videos')
-@Controller('videos')
+@ApiTags('video')
+@Controller('video')
 class UploadVideoController {
   constructor(private readonly commandBus: CommandBus) {}
   @Post('/')

@@ -9,7 +9,7 @@ class UploadVideoHandler implements ICommandHandler<UploadVideoCommand> {
   constructor(
     private readonly videoFactory: VideoFactory,
     private readonly eventPublisher: EventPublisher,
-    private readonly NoteRepository: MongoVideoEntityRepository
+    private readonly videoRepository: MongoVideoEntityRepository
   ) {}
   async execute(command: UploadVideoCommand): Promise<void> {
     const { title, course, url, thumbnailUrl } = command.uploadVideoRequest;
@@ -17,7 +17,7 @@ class UploadVideoHandler implements ICommandHandler<UploadVideoCommand> {
       this.videoFactory.create(title, course, url, thumbnailUrl)
     );
 
-    await this.NoteRepository.saveOne(video);
+    await this.videoRepository.saveOne(video);
     video.apply(new VideoWasUploadedEvent(video.id));
     video.commit();
   }
