@@ -10,6 +10,6 @@ RUN npm i
 
 ADD . .
 
-EXPOSE 4001
+EXPOSE 3000
 
 CMD npm run dev

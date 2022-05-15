@@ -7,6 +7,6 @@ services:
       context: .
       target: ucocamp-videos
     ports:
-      - 4001:4001
+      - 3000:3000
     volumes:
       - .:/usr/src/app
