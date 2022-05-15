@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import BaseMongoEntityRepository from '../../../../../shared/data/BaseMongoEntityRepository';
@@ -20,7 +24,11 @@ class MongoVideoEntityRepository
     super(videoModel, videoSchemaFactory);
   }
   async getOne(id: string): Promise<Video> {
-    return await this.findOne({ id: id });
+    const videos = await this.find({ id: id });
+    if (videos.length > 1)
+      throw new InternalServerErrorException('Duplicated IDs');
+    if (videos.length === 0) throw new NotFoundException('Video Not Found!');
+    return videos[0];
   }
   async getAll(): Promise<Video[]> {
     return await this.findAll();
