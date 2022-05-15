@@ -42,8 +42,8 @@ class MongoVideoEntityRepository
   updateOne(video: Video): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  deleteOne(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async deleteOne(id: string): Promise<void> {
+    await this.entityModel.deleteOne({ id: id });
   }
 }
 
