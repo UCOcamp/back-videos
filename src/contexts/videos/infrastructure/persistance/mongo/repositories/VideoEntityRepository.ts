@@ -19,8 +19,8 @@ class MongoVideoEntityRepository
   ) {
     super(videoModel, videoSchemaFactory);
   }
-  getOne(id: string): Promise<Video> {
-    throw new Error('Method not implemented.');
+  async getOne(id: string): Promise<Video> {
+    return await this.findOne({ id: id });
   }
   async getAll(): Promise<Video[]> {
     return await this.findAll();
